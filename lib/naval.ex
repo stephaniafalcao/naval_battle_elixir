@@ -5,8 +5,6 @@ defmodule NavalBattle do
         {x, definingPositions()}
       end)
     )
-
-    IO.puts("Board Created")
   end
 
   def playing(board, row, column) do
