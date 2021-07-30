@@ -1,8 +1,11 @@
 defmodule NavalBattle do
-  def creatingBoard do
+  @moduledoc """
+  NavalBattle main module
+  """
+  def creating_board do
     Map.new(
       Enum.map(1..10, fn x ->
-        {x, definingPositions()}
+        {x, defining_positions()}
       end)
     )
   end
@@ -11,10 +14,10 @@ defmodule NavalBattle do
     board
     |> Map.get(row)
     |> Map.get(column)
-    |> printResult
+    |> print_result
   end
 
-  defp definingPositions do
+  defp defining_positions do
     values = [0, 1]
 
     line =
@@ -25,6 +28,6 @@ defmodule NavalBattle do
     Map.new(line)
   end
 
-  defp printResult(1), do: "You got me"
-  defp printResult(0), do: "Keep trying"
+  defp print_result(1), do: "You got me"
+  defp print_result(0), do: "Keep trying"
 end
