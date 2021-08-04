@@ -28,6 +28,6 @@ defmodule NavalBattle do
     Map.new(line)
   end
 
-  defp print_result(1), do: "You got me"
-  defp print_result(0), do: "Keep trying"
+  defp print_result(1), do: :shot
+  defp print_result(0), do: :water
 end
