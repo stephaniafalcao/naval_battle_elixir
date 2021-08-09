@@ -1,8 +1,8 @@
 defmodule GameServer do
   use GenServer
 
-  def start_board do
-    board = NavalBattle.creating_board()
+  def start_board(create_board_engine \\ &NavalBattle.creating_board/0) do
+    board = create_board_engine.()
     GenServer.start_link(__MODULE__, %{board: board, count: 5, chances: [], message: "You have 5 chances"})
   end
 
