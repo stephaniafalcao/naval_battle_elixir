@@ -21,13 +21,17 @@ defmodule GameServer do
   end
 
   def handle_call({row, column}, _from, state) when state.count > 0 do
-    result = NavalBattle.playing(state.board, row, column)
+    state.board
+    |> NavalBattle.playing(row, column)
+    |> case do
+      {:ok, result} ->
+        count = state.count - 1
+        new_state = %{state | count: count, chances: state.chances ++ [%{row: row, column: column, result: result}], message: "You have more #{count} chances"}
 
-    count = state.count - 1
-
-    new_state = %{state | count: count, chances: state.chances ++ [%{row: row, column: column, result: result}], message: "You have more #{count} chances"}
-
-    {:reply, %{count: new_state.count, chances: new_state.chances, message: new_state.message}, new_state}
+        {:reply, %{count: new_state.count, chances: new_state.chances, message: new_state.message}, new_state}
+      {:error, message} ->
+        {:reply, {:error, message}, state}
+    end
   end
 
   def handle_call({_row, _column}, _from, state) when state.count == 0 do

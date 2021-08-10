@@ -11,10 +11,27 @@ defmodule NavalBattle do
   end
 
   def playing(board, row, column) do
-    board
-    |> Map.get(row)
-    |> Map.get(column)
-    |> print_result
+    case validatePositions(board, row, column) do
+      :ok ->
+        result = board
+          |> Map.get(row)
+          |> Map.get(column)
+          |> print_result
+
+          {:ok, result}
+      {:error, message} ->
+        {:error, message}
+    end
+  end
+
+  defp validatePositions(board, row, column) do
+    board_length = length(Map.keys(board))
+
+    if (row > 0 and row <= board_length) and (column > 0 and column <= board_length) do
+      :ok
+    else
+      {:error, "Invalid positions passed. Positions should be between 1 and #{board_length}"}
+    end
   end
 
   defp defining_positions do
